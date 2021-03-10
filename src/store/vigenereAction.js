@@ -1,0 +1,5 @@
+import axiosVigenere from "../axiosVigenere";
+
+export const FETCH_VIGENERE_REQUEST = "FETCH_VIGENERE_REQUEST";
+export const FETCH_VIGENERE_SUCCESS = "FETCH_VIGENERE_SUCCESS";
+export const FETCH_VIGENERE_FAILURE = "FETCH_VIGENERE_FAILURE";
