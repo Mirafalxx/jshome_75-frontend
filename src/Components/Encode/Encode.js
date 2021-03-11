@@ -1,8 +1,19 @@
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 
-const Encode = () => {
-  return <TextField id="filled-multiline-static" label="Encode" multiline rows={5} variant="filled" />;
+const Encode = ({ encodeWord, change }) => {
+  return (
+    <TextField
+      id="filled-multiline-static"
+      label="Зашифровать"
+      multiline
+      rows={5}
+      variant="filled"
+      name="encodeWord"
+      value={encodeWord}
+      onChange={change}
+    />
+  );
 };
 
 export default Encode;
