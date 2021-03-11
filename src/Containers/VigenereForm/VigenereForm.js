@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Decode from "../../Components/Decode/Decode";
@@ -11,16 +12,18 @@ const VigenereForm = () => {
   const [decodeValue, setDecodeValue] = useState("");
   const dispatch = useDispatch();
 
-  const testHandler = () => {
-    dispatch(decodeVigenere(encodeValue, secretValue));
+  const encodeHandler = async () => {
+    const response = await axios.post("http://localhost:8000/vigenere/encode", { encodeValue, secretValue });
+    console.log(response.data);
   };
+
   return (
     <div>
       <Encode encodeWord={encodeValue} change={(e) => setEncodeValue(e.target.value)} />
       <VigenereAction
         password={secretValue}
         change={(e) => setSecretValue(e.target.value)}
-        decodeMessage={testHandler}
+        decodeMessage={encodeHandler}
         encodeMessage={() => console.log("encode")}
       />
       <Decode decodeWord={decodeValue} change={(e) => setDecodeValue(e.target.value)} />
