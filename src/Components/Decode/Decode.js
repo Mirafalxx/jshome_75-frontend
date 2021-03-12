@@ -8,6 +8,7 @@ const Decode = ({ decodeValue, change }) => {
       label="Расшифровать"
       multiline
       rows={5}
+      name="decode"
       variant="filled"
       value={decodeValue}
       onChange={change}

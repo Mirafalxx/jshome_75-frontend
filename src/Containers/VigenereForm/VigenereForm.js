@@ -1,32 +1,43 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Decode from "../../Components/Decode/Decode";
 import Encode from "../../Components/Encode/Encode";
 import VigenereAction from "../../Components/VigenereAction/VigenereAction";
-import { decodeVigenere } from "../../store/vigenereAction";
+import { decodeVigenereMessage, encodeVigenereMessage } from "../../store/vigenereAction";
 
 const VigenereForm = () => {
-  const [encodeValue, setEncodeValue] = useState("");
-  const [secretValue, setSecretValue] = useState("");
-  const [decodeValue, setDecodeValue] = useState("");
   const dispatch = useDispatch();
+  const [cipher, setCipher] = useState({
+    encode: "",
+    password: "",
+    decode: "",
+  });
 
-  const encodeHandler = async () => {
-    const response = await axios.post("http://localhost:8000/vigenere/encode", { encodeValue, secretValue });
-    console.log(response.data);
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setCipher((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
+  const encodeHandler = () => {
+    dispatch(encodeVigenereMessage(cipher.encode, cipher.password));
+  };
+
+  const decodeHandler = () => {
+    dispatch(decodeVigenereMessage(cipher.decode, cipher.password));
+  };
   return (
     <div>
-      <Encode encodeWord={encodeValue} change={(e) => setEncodeValue(e.target.value)} />
+      <Encode encodeWord={cipher.encode} change={changeHandler} />
       <VigenereAction
-        password={secretValue}
-        change={(e) => setSecretValue(e.target.value)}
+        password={cipher.password}
+        change={changeHandler}
         decodeMessage={encodeHandler}
-        encodeMessage={() => console.log("encode")}
+        encodeMessage={decodeHandler}
       />
-      <Decode decodeWord={decodeValue} change={(e) => setDecodeValue(e.target.value)} />
+      <Decode decodeWord={cipher.decode} change={changeHandler} />
     </div>
   );
 };

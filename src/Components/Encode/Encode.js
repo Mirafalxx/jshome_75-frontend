@@ -9,7 +9,7 @@ const Encode = ({ encodeWord, change }) => {
       multiline
       rows={5}
       variant="filled"
-      name="encodeWord"
+      name="encode"
       value={encodeWord}
       onChange={change}
     />

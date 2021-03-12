@@ -1,21 +1,35 @@
 import axiosVigenere from "../axiosVigenere";
 
-export const FETCH_VIGENERE_REQUEST = "FETCH_VIGENERE_REQUEST";
-export const FETCH_VIGENERE_SUCCESS = "FETCH_VIGENERE_SUCCESS";
-export const FETCH_VIGENERE_FAILURE = "FETCH_VIGENERE_FAILURE";
+export const POST_VIGENERE_DECODE_REQUEST = "POST_VIGENERE_DECODE_REQUEST";
+export const POST_VIGENERE_DECODE_SUCCESS = "POST_VIGENERE_DECODE_SUCCESS";
+export const POST_VIGENERE_DECODE_FAILURE = "POST_VIGENERE_DECODE_FAILURE";
 
-export const fetchVigenereSuccess = () => ({ type: FETCH_VIGENERE_SUCCESS });
+export const decodeVigenereRequest = () => ({ type: POST_VIGENERE_DECODE_REQUEST });
+export const decodeVigenereSuccess = (decode) => ({ type: POST_VIGENERE_DECODE_SUCCESS, decode });
+export const decodeVigenereFailure = () => ({ type: POST_VIGENERE_DECODE_FAILURE });
 
-export const decodeVigenere = ({ word, key }) => {
+//
+
+export const POST_VIGENERE_ENCODE_REQUEST = "POST_VIGENERE_ENCODE_REQUEST";
+export const POST_VIGENERE_ENCODE_SUCCESS = "POST_VIGENERE_ENCODE_SUCCESS";
+export const POST_VIGENERE_ENCODE_FAILURE = "POST_VIGENERE_ENCODE_FAILURE";
+
+export const encodeVigenereRequest = () => ({ type: POST_VIGENERE_ENCODE_REQUEST });
+export const encodeVigenereSuccess = (encode) => ({ type: POST_VIGENERE_ENCODE_SUCCESS, encode });
+export const encodeVigenereFailure = () => ({ type: POST_VIGENERE_ENCODE_FAILURE });
+//
+
+export const encodeVigenereMessage = (text, secretKey) => {
   return async (dispatch) => {
-    const response = await axiosVigenere.post("/decode", word, key);
-    console.log(response.data);
+    const response = await axiosVigenere.post("/encode", { text, secretKey });
+    dispatch(encodeVigenereSuccess(response.data));
   };
 };
 
-export const encodeVigenere = ({ word, key }) => {
+export const decodeVigenereMessage = (text, secretKey) => {
   return async (dispatch) => {
-    const response = await axiosVigenere.post("/encode", word, key);
+    const response = await axiosVigenere.post("/decode", { text, secretKey });
+    dispatch(decodeVigenereSuccess(response.data));
     console.log(response.data);
   };
 };
